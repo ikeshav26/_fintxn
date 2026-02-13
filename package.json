@@ -12,5 +12,10 @@
     "turbo": "^2.8.7"
   },
   "packageManager": "pnpm@8.15.6",
-  "name": "with-vite"
+  "name": "with-vite",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "resend": "^6.9.2"
+  }
 }
