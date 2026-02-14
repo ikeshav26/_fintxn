@@ -27,7 +27,7 @@ const accountSchema=new mongoose.Schema({
 
 accountSchema.index({user:1,status:1})
 
-accountSchema.method.getbalance=async function(){
+accountSchema.methods.getbalance=async function(){
     const balance=await Ledger.aggregate([
         { $match: { account: this._id } },
         { $group: {

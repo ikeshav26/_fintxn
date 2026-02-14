@@ -133,3 +133,63 @@ export const sendTransactionSuccesfulMail = async (userEmail,username,amount,toA
     return false;
   }
 };
+
+
+export const sendFreeCreditAddedEmail = async (userEmail,username,amount) => {
+  try {
+    const { data, error } = await resend.emails.send({
+      from: process.env.SENDER_EMAIL || 'fintech <onboarding@resend.dev>',
+      to: [userEmail],
+      subject: 'Free Credits Added!',
+        html: `<!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>Transaction Successful</title>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              background-color: #f4f4f4;
+              margin: 0;
+              padding: 20px;
+            }
+            .container {
+              max-width: 600px;
+              margin: 0 auto;
+              background-color: #ffffff;
+              padding: 20px;
+              border-radius: 8px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            h1 {
+              color: #333333;
+            }
+            p {
+              color: #555555;
+            }
+          </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Free Credits Added!</h1>
+                <p>Dear ${username},</p>
+                <p>We have added free credits of amount ${amount} to your account. Enjoy transacting with Fin_Txn!</p>
+                <p>Thank you for using Fin_Txn!</p>
+            </div>
+        </body>
+        </html>`,
+    });
+
+    if (error) {
+      console.log('Error in sending mail', error);
+      return false;
+    }
+
+    console.log('Email sent:', data.id);
+    return true;
+  } catch (err) {
+    console.log('Error in sending mail', err);
+    return false;
+  }
+};
