@@ -12,3 +12,25 @@ export const createAccount=async(req,res)=>{
         res.status(500).json({ message: "Server error", error: err.message });
     }
 }
+
+
+export const checkBalance=async(req,res)=>{
+    try{
+        const accountId=req.params.accountId;
+
+        if(!accountId){
+            return res.status(400).json({ message: "Account ID is required" });
+        }
+
+        const account=await Account.findById(accountId);
+        if(!account){
+            return res.status(404).json({ message: "Account not found" });
+        }
+
+        const balance=await account.getbalance()
+        res.status(200).json({ balance })
+    }catch(err){
+            console.error("Error checking balance:", err);
+            res.status(500).json({ message: "Server error", error: err.message });
+    }
+}
