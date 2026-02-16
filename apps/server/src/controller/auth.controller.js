@@ -1,6 +1,6 @@
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
-import { sendRegisterationEmail } from "../services/email.service.js";
+import { sendLoginEmail, sendRegisterationEmail } from "../services/email.service.js";
 
 
 export const registerUser=async(req,res)=>{
@@ -55,6 +55,8 @@ export const loginUser=async(req,res)=>{
 
         const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"3d"});
         res.cookie("token",token)
+
+        await sendLoginEmail(email).catch(err => console.error("Error sending login email:", err));
 
         res.status(200).json({ message: "User logged in successfully", user:{
             id:user._id,
