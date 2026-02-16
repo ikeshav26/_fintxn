@@ -1,39 +1,44 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
-const transactionSchema=new mongoose.Schema({
-    fromAccount:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Account",
-        required: [ true, "Transaction must be associated with a from account" ],
-        index: true
+const transactionSchema = new mongoose.Schema(
+  {
+    fromAccount: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Account",
+      required: [true, "Transaction must be associated with a from account"],
+      index: true,
     },
-    toAccount:{
-         type: mongoose.Schema.Types.ObjectId,
-        ref: "Account",
-        required: [ true, "Transaction must be associated with a to account" ],
-        index: true
+    toAccount: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Account",
+      required: [true, "Transaction must be associated with a to account"],
+      index: true,
     },
-    status:{
-        type:String,
-        enum:{
-            values:["PENDING","COMPLETED","FAILED","REVERSED"],
-            message:"Status must be one of PENDING, COMPLETED, FAILED, REVERSED"
-        },
-        default:"PENDING"
+    status: {
+      type: String,
+      enum: {
+        values: ["PENDING", "COMPLETED", "FAILED", "REVERSED"],
+        message: "Status must be one of PENDING, COMPLETED, FAILED, REVERSED",
+      },
+      default: "PENDING",
     },
-     amount: {
-        type: Number,
-        required: [ true, "Amount is required for creating a transaction" ],
-        min: [ 0, "Transaction amount cannot be negative" ]
+    amount: {
+      type: Number,
+      required: [true, "Amount is required for creating a transaction"],
+      min: [0, "Transaction amount cannot be negative"],
     },
-     idempotencyKey: {
-        type: String,
-        required: [ true, "Idempotency Key is required for creating a transaction" ],
-        index: true,
-        unique: true
-    }
-},{timestamps:true})  
+    idempotencyKey: {
+      type: String,
+      required: [
+        true,
+        "Idempotency Key is required for creating a transaction",
+      ],
+      index: true,
+      unique: true,
+    },
+  },
+  { timestamps: true },
+);
 
-
-const Transaction=mongoose.model("Transaction",transactionSchema)
-export default Transaction
+const Transaction = mongoose.model("Transaction", transactionSchema);
+export default Transaction;

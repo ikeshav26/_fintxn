@@ -7,10 +7,10 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export const sendRegisterationEmail = async (email) => {
   try {
     const { data, error } = await resend.emails.send({
-      from: process.env.SENDER_EMAIL || 'fintech <onboarding@resend.dev>',
+      from: process.env.SENDER_EMAIL || "fintech <onboarding@resend.dev>",
       to: [email],
-      subject: 'Welcome to Fin_Txn!',
-        html: `<!DOCTYPE html>
+      subject: "Welcome to Fin_Txn!",
+      html: `<!DOCTYPE html>
         <html lang="en">
         <head>
           <meta charset="UTF-8" />
@@ -62,14 +62,14 @@ export const sendRegisterationEmail = async (email) => {
     });
 
     if (error) {
-      console.log('Error in sending mail', error);
+      console.log("Error in sending mail", error);
       return false;
     }
 
-    console.log('Email sent:', data.id);
+    console.log("Email sent:", data.id);
     return true;
   } catch (err) {
-    console.log('Error in sending mail', err);
+    console.log("Error in sending mail", err);
     return false;
   }
 };
@@ -77,10 +77,10 @@ export const sendRegisterationEmail = async (email) => {
 export const sendLoginEmail = async (email) => {
   try {
     const { data, error } = await resend.emails.send({
-      from: process.env.SENDER_EMAIL || 'fintech <onboarding@resend.dev>',
+      from: process.env.SENDER_EMAIL || "fintech <onboarding@resend.dev>",
       to: [email],
-      subject: 'Welcome to Fin_Txn!',
-        html: `<!DOCTYPE html>
+      subject: "Welcome to Fin_Txn!",
+      html: `<!DOCTYPE html>
         <html lang="en">
         <head>
           <meta charset="UTF-8" />
@@ -132,26 +132,30 @@ export const sendLoginEmail = async (email) => {
     });
 
     if (error) {
-      console.log('Error in sending mail', error);
+      console.log("Error in sending mail", error);
       return false;
     }
 
-    console.log('Email sent:', data.id);
+    console.log("Email sent:", data.id);
     return true;
   } catch (err) {
-    console.log('Error in sending mail', err);
+    console.log("Error in sending mail", err);
     return false;
   }
 };
 
-
-export const sendTransactionSuccesfulMail = async (userEmail,username,amount,toAccount) => {
+export const sendTransactionSuccesfulMail = async (
+  userEmail,
+  username,
+  amount,
+  toAccount,
+) => {
   try {
     const { data, error } = await resend.emails.send({
-      from: process.env.SENDER_EMAIL || 'fintech <onboarding@resend.dev>',
+      from: process.env.SENDER_EMAIL || "fintech <onboarding@resend.dev>",
       to: [userEmail],
-      subject: 'Transaction Successful!',
-        html: `<!DOCTYPE html>
+      subject: "Transaction Successful!",
+      html: `<!DOCTYPE html>
         <html lang="en">
         <head>
           <meta charset="UTF-8" />
@@ -192,26 +196,25 @@ export const sendTransactionSuccesfulMail = async (userEmail,username,amount,toA
     });
 
     if (error) {
-      console.log('Error in sending mail', error);
+      console.log("Error in sending mail", error);
       return false;
     }
 
-    console.log('Email sent:', data.id);
+    console.log("Email sent:", data.id);
     return true;
   } catch (err) {
-    console.log('Error in sending mail', err);
+    console.log("Error in sending mail", err);
     return false;
   }
 };
 
-
-export const sendFreeCreditAddedEmail = async (userEmail,username,amount) => {
+export const sendFreeCreditAddedEmail = async (userEmail, username, amount) => {
   try {
     const { data, error } = await resend.emails.send({
-      from: process.env.SENDER_EMAIL || 'fintech <onboarding@resend.dev>',
+      from: process.env.SENDER_EMAIL || "fintech <onboarding@resend.dev>",
       to: [userEmail],
-      subject: 'Free Credits Added!',
-        html: `<!DOCTYPE html>
+      subject: "Free Credits Added!",
+      html: `<!DOCTYPE html>
         <html lang="en">
         <head>
           <meta charset="UTF-8" />
@@ -252,25 +255,25 @@ export const sendFreeCreditAddedEmail = async (userEmail,username,amount) => {
     });
 
     if (error) {
-      console.log('Error in sending mail', error);
+      console.log("Error in sending mail", error);
       return false;
     }
 
-    console.log('Email sent:', data.id);
+    console.log("Email sent:", data.id);
     return true;
   } catch (err) {
-    console.log('Error in sending mail', err);
+    console.log("Error in sending mail", err);
     return false;
   }
 };
 
-export const sendRegisterationOtp=async(email,otp)=>{
-  try{
+export const sendRegisterationOtp = async (email, otp) => {
+  try {
     const { data, error } = await resend.emails.send({
-      from: process.env.SENDER_EMAIL || 'fintech <onboarding@resend.dev>',
+      from: process.env.SENDER_EMAIL || "fintech <onboarding@resend.dev>",
       to: [email],
-      subject: 'Registration OTP',
-        html: `<!DOCTYPE html>
+      subject: "Registration OTP",
+      html: `<!DOCTYPE html>
         <html lang="en">
         <head>
           <meta charset="UTF-8" />
@@ -311,25 +314,25 @@ export const sendRegisterationOtp=async(email,otp)=>{
     });
 
     if (error) {
-      console.log('Error in sending mail', error);
+      console.log("Error in sending mail", error);
       return false;
     }
 
-    console.log('Email sent:', data.id);
+    console.log("Email sent:", data.id);
     return true;
   } catch (err) {
-    console.log('Error in sending registration OTP email', err);
+    console.log("Error in sending registration OTP email", err);
     return false;
   }
-}
+};
 
-export const sendPasswordResetOtp=async(email,otp)=>{
-  try{
+export const sendPasswordResetOtp = async (email, otp) => {
+  try {
     const { data, error } = await resend.emails.send({
-      from: process.env.SENDER_EMAIL || 'fintech <onboarding@resend.dev>',
+      from: process.env.SENDER_EMAIL || "fintech <onboarding@resend.dev>",
       to: [email],
-      subject: 'Password Reset OTP',
-        html: `<!DOCTYPE html>
+      subject: "Password Reset OTP",
+      html: `<!DOCTYPE html>
         <html lang="en">
         <head>
           <meta charset="UTF-8" />
@@ -370,13 +373,14 @@ export const sendPasswordResetOtp=async(email,otp)=>{
     });
 
     if (error) {
-      console.log('Error in sending mail', error);
+      console.log("Error in sending mail", error);
       return false;
     }
 
-    console.log('Email sent:', data.id);
+    console.log("Email sent:", data.id);
     return true;
   } catch (err) {
-    console.log('Error in sending password reset OTP email', err);
+    console.log("Error in sending password reset OTP email", err);
     return false;
-  }}
+  }
+};
