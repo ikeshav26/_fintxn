@@ -12,12 +12,10 @@ export const createTransaction = async (req, res) => {
     const { fromAccount, toAccount, amount, idempotencyKey } = req.body;
 
     if (!fromAccount || !toAccount || !amount || !idempotencyKey) {
-      return res
-        .status(400)
-        .json({
-          error:
-            "Missing required fields: fromAccount, toAccount, amount, idempotencyKey",
-        });
+      return res.status(400).json({
+        error:
+          "Missing required fields: fromAccount, toAccount, amount, idempotencyKey",
+      });
     }
 
     const fromUserAccount = await Account.findById(fromAccount).populate(
@@ -38,12 +36,10 @@ export const createTransaction = async (req, res) => {
     });
     if (isTransactionAlreadyExists) {
       if (isTransactionAlreadyExists.status === "COMPLETED") {
-        return res
-          .status(200)
-          .json({
-            message: "Transaction already completed",
-            transaction: isTransactionAlreadyExists,
-          });
+        return res.status(200).json({
+          message: "Transaction already completed",
+          transaction: isTransactionAlreadyExists,
+        });
       }
       if (isTransactionAlreadyExists.status === "PENDING") {
         return res
@@ -51,18 +47,14 @@ export const createTransaction = async (req, res) => {
           .json({ message: "Transaction is already in progress" });
       }
       if (isTransactionAlreadyExists.status === "FAILED") {
-        return res
-          .status(200)
-          .json({
-            message: "Previous transaction attempt failed, you can retry",
-          });
+        return res.status(200).json({
+          message: "Previous transaction attempt failed, you can retry",
+        });
       }
       if (isTransactionAlreadyExists.status === "REVERSED") {
-        return res
-          .status(200)
-          .json({
-            message: "Previous transaction was reversed, you can retry",
-          });
+        return res.status(200).json({
+          message: "Previous transaction was reversed, you can retry",
+        });
       }
     }
 
@@ -70,20 +62,16 @@ export const createTransaction = async (req, res) => {
       fromUserAccount.status !== "ACTIVE" ||
       touserAccount.status !== "ACTIVE"
     ) {
-      return res
-        .status(400)
-        .json({
-          error: "Both accounts must be active to perform a transaction",
-        });
+      return res.status(400).json({
+        error: "Both accounts must be active to perform a transaction",
+      });
     }
 
     const balance = await fromUserAccount.getbalance();
     if (balance < amount) {
-      return res
-        .status(400)
-        .json({
-          error: `Insufficient balance in the from account. Available balance: ${balance} and requested amount: ${amount}`,
-        });
+      return res.status(400).json({
+        error: `Insufficient balance in the from account. Available balance: ${balance} and requested amount: ${amount}`,
+      });
     }
 
     const session = await mongoose.startSession();
@@ -142,12 +130,10 @@ export const createTransaction = async (req, res) => {
       .status(201)
       .json({ message: "Transaction completed successfully", transaction });
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        error: "An error occurred while creating the transaction",
-        details: err.message,
-      });
+    res.status(500).json({
+      error: "An error occurred while creating the transaction",
+      details: err.message,
+    });
     console.error("Error creating transaction:", err);
   }
 };
@@ -206,19 +192,15 @@ export const addTestCredits = async (req, res) => {
     session.endSession();
 
     sendFreeCreditAddedEmail(account.user.email, account.user.username, amount);
-    res
-      .status(201)
-      .json({
-        message: "Test credits added successfully",
-        transaction: testTransaction,
-      });
+    res.status(201).json({
+      message: "Test credits added successfully",
+      transaction: testTransaction,
+    });
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        error: "An error occurred while adding test credits",
-        details: err.message,
-      });
+    res.status(500).json({
+      error: "An error occurred while adding test credits",
+      details: err.message,
+    });
     console.error("Error adding test credits:", err);
   }
 };
