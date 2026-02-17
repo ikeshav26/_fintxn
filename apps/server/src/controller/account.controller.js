@@ -89,3 +89,51 @@ export const getAccountDetails=async(req,res)=>{
     res.status(500).json({ message: "Server error", error: err.message });
   }
 }
+
+
+export const freezeAccount=async(req,res)=>{
+  try{
+    const accountId=req.params.accountId;
+
+    if(!accountId){
+      return res.status(400).json({ message: "Account ID is required" });
+    }
+
+    const account=await Account.findById(accountId);
+    if(!account){
+      return res.status(404).json({ message: "Account not found" });
+    }
+
+    account.status="FROZEN";
+    await account.save();
+
+    res.status(200).json({ message: "Account frozen successfully", account });
+  }catch(err){
+    console.error("Error freezing account:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+}
+
+
+export const deFreezeAccount=async(req,res)=>{
+  try{
+    const accountId=req.params.accountId;
+
+    if(!accountId){
+      return res.status(400).json({ message: "Account ID is required" });
+    }
+
+    const account=await Account.findById(accountId);
+    if(!account){
+      return res.status(404).json({ message: "Account not found" });
+    }
+
+    account.status="ACTIVE";
+    await account.save();
+
+    res.status(200).json({ message: "Account unfrozen successfully", account });
+  }catch(err){
+    console.error("Error unfreezing account:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+}
