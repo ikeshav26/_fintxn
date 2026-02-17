@@ -88,18 +88,17 @@ export const loginUser = async (req, res) => {
   }
 };
 
-
-export const logout=async(req,res)=>{
-  try{
-    const token=req.cookies.token;
-    if(!token){
+export const logout = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) {
       return res.status(400).json({ message: "No token provided" });
     }
 
     res.clearCookie("token");
     res.status(200).json({ message: "User logged out successfully" });
-  } catch(err){
+  } catch (err) {
     console.error("Logout error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
-}
+};

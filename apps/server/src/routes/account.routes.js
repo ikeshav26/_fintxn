@@ -13,7 +13,7 @@ const router = express.Router();
 router.post("/create", auth, createAccount);
 router.get("/balance/:accountId", auth, checkBalance);
 router.get("/my-accounts", auth, getUserAccounts);
-router.get('/statement/:accountId', auth, getAccountStatement);
-router.get('/details/:accountId', auth, getAccountDetails);
+router.get("/statement/:accountId", auth, getAccountStatement);
+router.get("/details/:accountId", auth, getAccountDetails);
 
 export default router;
