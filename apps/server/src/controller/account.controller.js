@@ -70,12 +70,10 @@ export const getAccountStatement = async (req, res) => {
         .json({ message: "Account not found or no statements available" });
     }
 
-    res
-      .status(200)
-      .json({
-        message: "Account statements fetched successfully",
-        accountStatements,
-      });
+    res.status(200).json({
+      message: "Account statements fetched successfully",
+      accountStatements,
+    });
   } catch (err) {
     console.error("Error fetching account statements:", err);
     res.status(500).json({ message: "Server error", error: err.message });

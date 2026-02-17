@@ -1,3 +1,4 @@
+import { createOtp, isOtpExpired } from "../helper/helper.js";
 import OTP from "../models/otp.model.js";
 import User from "../models/user.model.js";
 import {
@@ -12,8 +13,7 @@ export const registerWithOtp = async (req, res) => {
       return res.status(400).json({ message: "Email is required" });
     }
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    await OTP.create({ email, otp });
+    const otp = await createOtp(email);
 
     await sendRegisterationOtp(email, otp).catch((err) =>
       console.error("Error sending OTP email:", err),
@@ -33,21 +33,11 @@ export const verifyRegisterationOtp = async (req, res) => {
       return res.status(400).json({ message: "Email and OTP are required" });
     }
 
-    const otpRecord = await OTP.findOne({ email, otp });
-    if (!otpRecord) {
-      return res.status(400).json({ message: "Invalid OTP" });
+    const isValid = await isOtpExpired(email, otp);
+
+    if (!isValid) {
+      return res.status(400).json({ message: "Invalid or expired OTP" });
     }
-
-    const timeOfCreation = otpRecord.createdAt;
-    const currentTime = new Date();
-    const timeDifference = (currentTime - timeOfCreation) / 1000;
-
-    if (timeDifference > 180) {
-      await OTP.deleteOne({ email });
-      return res.status(400).json({ message: "OTP has expired" });
-    }
-
-    await OTP.deleteOne({ email });
 
     res.status(200).json({ message: "OTP verified successfully" });
   } catch (err) {
@@ -68,8 +58,7 @@ export const sendOtpToResetPassword = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    await OTP.create({ email, otp });
+    const otp = await createOtp(email);
 
     await sendPasswordResetOtp(email, otp).catch((err) =>
       console.error("Error sending OTP email:", err),
@@ -91,9 +80,9 @@ export const resetPasswordWithOTp = async (req, res) => {
         .json({ message: "Email, OTP and new password are required" });
     }
 
-    const otpRecord = await OTP.findOne({ email, otp });
-    if (!otpRecord) {
-      return res.status(400).json({ message: "Invalid OTP" });
+    const isValid = await isOtpExpired(email, otp);
+    if (!isValid) {
+      return res.status(400).json({ message: "OTP has expired" });
     }
 
     const user = await User.findOne({ email });
@@ -101,19 +90,8 @@ export const resetPasswordWithOTp = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const timeOfCreation = otpRecord.createdAt;
-    const currentTime = new Date();
-    const timeDifference = (currentTime - timeOfCreation) / 1000;
-
-    if (timeDifference > 180) {
-      await OTP.deleteOne({ email });
-      return res.status(400).json({ message: "OTP has expired" });
-    }
-
     user.password = newPassword;
     await user.save();
-
-    await OTP.deleteOne({ email });
 
     res.status(200).json({ message: "Password reset successfully" });
   } catch (err) {
