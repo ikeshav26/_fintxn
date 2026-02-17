@@ -22,6 +22,17 @@ const accountSchema = new mongoose.Schema(
       required: [true, "Currency is required"],
       default: "INR",
     },
+    mpin:{
+      type:String,required:[true,"MPIN is required"],
+       minlength:[4,"MPIN must be at least 4 digits"],
+       maxlength:[6,"MPIN must be at most 6 digits"],
+       validate:{
+        validator:function(v){
+          return /^\d+$/.test(v);
+        },
+        message:"MPIN must contain only digits"
+       }
+    }
   },
   { timestamps: true },
 );

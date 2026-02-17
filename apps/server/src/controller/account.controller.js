@@ -1,11 +1,13 @@
 import Account from "../models/account.model.js";
 import Ledger from "../models/ledger.model.js";
+import { isMpinValid } from "../helper/helper.js";
 
 export const createAccount = async (req, res) => {
   try {
     const userId = req.user.id;
+    const {mpin} = req.body;
 
-    const createAccount = await Account.create({ user: userId });
+    const createAccount = await Account.create({ user: userId, mpin });
     res.status(201).json({
       message: "Account created successfully",
       account: createAccount,
@@ -134,6 +136,32 @@ export const deFreezeAccount=async(req,res)=>{
     res.status(200).json({ message: "Account unfrozen successfully", account });
   }catch(err){
     console.error("Error unfreezing account:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+}
+
+
+export const verifyMpin=async(req,res)=>{
+  try{
+    const accountId=req.params.accountId;
+    const {mpin}=req.body;
+
+    if(!accountId){
+      return res.status(400).json({ message: "Account ID is required" });
+    }
+
+    if(!mpin){
+      return res.status(400).json({ message: "MPIN is required" });
+    }
+
+    const isValid=await isMpinValid(accountId,mpin);
+    if(!isValid){
+      return res.status(401).json({ message: "Invalid MPIN" });
+    }
+
+    res.status(200).json({ message: "MPIN verified successfully" });
+  }catch(err){
+    console.error("Error verifying MPIN:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 }
