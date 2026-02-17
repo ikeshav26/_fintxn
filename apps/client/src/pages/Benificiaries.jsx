@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Benificiaries = () => {
-  return (
-    <div>Benificiaries</div>
-  )
-}
+  return <div>Benificiaries</div>;
+};
 
-export default Benificiaries
+export default Benificiaries;
