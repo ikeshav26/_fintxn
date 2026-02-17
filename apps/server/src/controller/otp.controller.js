@@ -1,5 +1,4 @@
 import { createOtp, isOtpExpired } from "../helper/helper.js";
-import OTP from "../models/otp.model.js";
 import User from "../models/user.model.js";
 import {
   sendPasswordResetOtp,
