@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { 
   NavLink, 
-  useNavigate,
   useLocation 
 } from 'react-router-dom';
 import { 
@@ -14,13 +13,18 @@ import {
   ChevronRight
 } from 'lucide-react';
 import appContext from '../context/appContext.js';
+import {
+  publicRoutes,
+  loggedOutRoutes,
+  loggedInTopRoutes,
+  accountDropdownRoutes
+} from '../assets/asstes.js';
 
 const Navbar = () => {
-  const { user, logoutUser } = useContext(appContext);
+  const { user, logoutUser,navigate } = useContext(appContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -38,27 +42,7 @@ const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const publicRoutes = [
-    { label: "HOME", path: "/" },
-    { label: "ABOUT US", path: "/about" },
-    { label: "HELP DESK", path: "/help-desk" }
-  ];
-
-  const loggedOutRoutes = [
-    { label: "LOGIN", path: "/login" },
-    { label: "ENROLL NOW", path: "/register" }
-  ];
-
-  const accountDropdownRoutes = [
-    { label: "ACCOUNT DETAILS", path: "/account-details" },
-    { label: "ACCOUNT STATEMENT", path: "/account-statement" },
-    { label: "BENEFICIARIES", path: "/benificiaries" },
-  ];
-
-  const loggedInTopRoutes = [
-    { label: "DASHBOARD", path: "/dashboard" },
-    { label: "PAYMENTS & TRANSFERS", path: "/transfer" }
-  ];
+  
 
   const handleLogout = () => {
     logoutUser();
