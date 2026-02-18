@@ -17,7 +17,7 @@ import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
-    <div className="bg-red-300">
+    <div className="">
       <Navbar />
       <Routes>
         <Route path="/account-details" element={<AccountDetails />} />
