@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 import { Gift, Info } from "lucide-react";
 
 const Bar = () => {
   return (
     <div>
-        <section className="bg-[#FFD700] border-b-4 border-[#003366] py-6 px-6">
+      <section className="bg-[#FFD700] border-b-4 border-[#003366] py-6 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-start sm:items-center gap-4">
             <div className="bg-[#003366] p-3 text-white shrink-0 animate-pulse">
@@ -30,7 +30,7 @@ const Bar = () => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default Bar
+export default Bar;

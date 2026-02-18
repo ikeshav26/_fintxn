@@ -1,27 +1,24 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
-import { 
-  NavLink, 
-  useLocation 
-} from 'react-router-dom';
-import { 
-  Landmark, 
-  LogOut, 
-  Menu, 
+import React, { useState, useContext, useEffect, useRef } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import {
+  Landmark,
+  LogOut,
+  Menu,
   X,
   Lock,
   ChevronDown,
-  ChevronRight
-} from 'lucide-react';
-import appContext from '../context/appContext.js';
+  ChevronRight,
+} from "lucide-react";
+import appContext from "../context/appContext.js";
 import {
   publicRoutes,
   loggedOutRoutes,
   loggedInTopRoutes,
-  accountDropdownRoutes
-} from '../assets/asstes.js';
+  accountDropdownRoutes,
+} from "../assets/asstes.js";
 
 const Navbar = () => {
-  const { user, logoutUser,navigate } = useContext(appContext);
+  const { user, logoutUser, navigate } = useContext(appContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -38,24 +35,26 @@ const Navbar = () => {
         setIsAccountDropdownOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  
 
   const handleLogout = () => {
     logoutUser();
-    navigate('/login');
+    navigate("/login");
   };
 
-  const isAccountRouteActive = accountDropdownRoutes.some(r => location.pathname === r.path);
+  const isAccountRouteActive = accountDropdownRoutes.some(
+    (r) => location.pathname === r.path,
+  );
 
   return (
     <nav className="w-full bg-[#f4f4f4] border-b-2 border-[#cccccc] font-serif sticky top-0 z-50">
       <div className="bg-[#002244] text-white text-[10px] py-1 px-4 sm:px-8 flex justify-between items-center tracking-widest">
         <div className="flex items-center gap-4">
-          <span className="hidden xs:inline">OFFICIAL SECURE BANKING PORTAL</span>
+          <span className="hidden xs:inline">
+            OFFICIAL SECURE BANKING PORTAL
+          </span>
           <span className="hidden sm:inline">|</span>
           <span className="font-bold">FDIC INSURED</span>
         </div>
@@ -67,7 +66,6 @@ const Navbar = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
         <div className="flex justify-between items-stretch h-16 lg:h-20">
-          
           <div className="flex items-center border-r border-[#cccccc] pr-4 sm:pr-8 my-2 shrink-0">
             <NavLink to="/" className="flex items-center gap-2 sm:gap-3">
               <div className="bg-[#003366] p-1.5 sm:p-2 border-2 border-[#FFD700]">
@@ -84,7 +82,6 @@ const Navbar = () => {
             </NavLink>
           </div>
 
-
           <div className="hidden lg:flex items-stretch">
             {publicRoutes.map((route) => (
               <NavLink
@@ -92,7 +89,7 @@ const Navbar = () => {
                 to={route.path}
                 className={({ isActive }) => `
                   px-4 py-3 text-xs font-bold tracking-wider inline-flex items-center transition-none border-b-4
-                  ${isActive ? 'bg-[#003366] text-white border-[#FFD700]' : 'text-[#003366] hover:bg-slate-200 border-transparent'}
+                  ${isActive ? "bg-[#003366] text-white border-[#FFD700]" : "text-[#003366] hover:bg-slate-200 border-transparent"}
                 `}
               >
                 {route.label}
@@ -107,7 +104,7 @@ const Navbar = () => {
                     to={route.path}
                     className={({ isActive }) => `
                       px-4 py-3 text-xs font-bold tracking-wider inline-flex items-center transition-none border-b-4
-                      ${isActive ? 'bg-[#003366] text-white border-[#FFD700]' : 'text-[#003366] hover:bg-slate-200 border-transparent'}
+                      ${isActive ? "bg-[#003366] text-white border-[#FFD700]" : "text-[#003366] hover:bg-slate-200 border-transparent"}
                     `}
                   >
                     {route.label}
@@ -123,29 +120,33 @@ const Navbar = () => {
                     to={route.path}
                     className={({ isActive }) => `
                       px-4 py-3 text-xs font-bold tracking-wider inline-flex items-center transition-none border-b-4
-                      ${isActive ? 'bg-[#003366] text-white border-[#FFD700]' : 'text-[#003366] hover:bg-slate-200 border-transparent'}
+                      ${isActive ? "bg-[#003366] text-white border-[#FFD700]" : "text-[#003366] hover:bg-slate-200 border-transparent"}
                     `}
                   >
                     {route.label}
                   </NavLink>
                 ))}
 
-
                 <div className="relative flex items-stretch" ref={dropdownRef}>
                   <button
-                    onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
+                    onClick={() =>
+                      setIsAccountDropdownOpen(!isAccountDropdownOpen)
+                    }
                     className={`
                       px-5 py-3 text-xs font-bold tracking-wider inline-flex items-center gap-2 transition-none border-b-4
-                      ${isAccountRouteActive || isAccountDropdownOpen
-                        ? 'bg-[#003366] text-white border-[#FFD700]' 
-                        : 'text-[#003366] hover:bg-slate-200 border-transparent'
+                      ${
+                        isAccountRouteActive || isAccountDropdownOpen
+                          ? "bg-[#003366] text-white border-[#FFD700]"
+                          : "text-[#003366] hover:bg-slate-200 border-transparent"
                       }
                     `}
                   >
                     ACCOUNTS
-                    <ChevronDown size={14} className={`transition-transform ${isAccountDropdownOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown
+                      size={14}
+                      className={`transition-transform ${isAccountDropdownOpen ? "rotate-180" : ""}`}
+                    />
                   </button>
-
 
                   {isAccountDropdownOpen && (
                     <div className="absolute top-full right-0 w-64 bg-white border-2 border-[#003366] shadow-[8px_8px_0px_rgba(0,51,102,0.1)] z-[60]">
@@ -159,9 +160,10 @@ const Navbar = () => {
                             to={route.path}
                             className={({ isActive }) => `
                               flex items-center justify-between px-4 py-3 text-xs font-bold tracking-wide transition-none
-                              ${isActive 
-                                ? 'bg-slate-100 text-[#003366] border-l-4 border-l-[#FFD700]' 
-                                : 'text-[#003366] hover:bg-slate-50 border-l-4 border-l-transparent'
+                              ${
+                                isActive
+                                  ? "bg-slate-100 text-[#003366] border-l-4 border-l-[#FFD700]"
+                                  : "text-[#003366] hover:bg-slate-50 border-l-4 border-l-transparent"
                               }
                             `}
                           >
@@ -185,7 +187,6 @@ const Navbar = () => {
             )}
           </div>
 
-
           <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -196,7 +197,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
 
       {isMobileMenuOpen && (
         <div className="lg:hidden bg-white border-t border-[#cccccc] shadow-2xl overflow-y-auto max-h-[calc(100vh-80px)]">
@@ -212,15 +212,36 @@ const Navbar = () => {
             ))}
             {user && (
               <>
-                <div className="bg-slate-100 px-6 py-2 text-[10px] font-bold text-slate-500 uppercase">Banking</div>
+                <div className="bg-slate-100 px-6 py-2 text-[10px] font-bold text-slate-500 uppercase">
+                  Banking
+                </div>
                 {loggedInTopRoutes.map((route) => (
-                   <NavLink key={route.path} to={route.path} className="px-6 py-4 text-xs font-bold text-[#003366] border-b border-slate-200">{route.label}</NavLink>
+                  <NavLink
+                    key={route.path}
+                    to={route.path}
+                    className="px-6 py-4 text-xs font-bold text-[#003366] border-b border-slate-200"
+                  >
+                    {route.label}
+                  </NavLink>
                 ))}
-                <div className="bg-slate-100 px-6 py-2 text-[10px] font-bold text-slate-500 uppercase">Account Access</div>
+                <div className="bg-slate-100 px-6 py-2 text-[10px] font-bold text-slate-500 uppercase">
+                  Account Access
+                </div>
                 {accountDropdownRoutes.map((route) => (
-                   <NavLink key={route.path} to={route.path} className="px-6 py-4 text-xs font-bold text-[#003366] border-b border-slate-200 pl-10">{route.label}</NavLink>
+                  <NavLink
+                    key={route.path}
+                    to={route.path}
+                    className="px-6 py-4 text-xs font-bold text-[#003366] border-b border-slate-200 pl-10"
+                  >
+                    {route.label}
+                  </NavLink>
                 ))}
-                <button onClick={handleLogout} className="px-6 py-5 text-xs font-bold text-red-700 text-left">SIGN OUT</button>
+                <button
+                  onClick={handleLogout}
+                  className="px-6 py-5 text-xs font-bold text-red-700 text-left"
+                >
+                  SIGN OUT
+                </button>
               </>
             )}
           </div>

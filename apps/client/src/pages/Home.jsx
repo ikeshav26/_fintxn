@@ -5,15 +5,13 @@ import Bar from "../ui/home/Bar.jsx";
 import CTA from "../ui/home/CTA.jsx";
 
 const Home = () => {
-
-
   return (
     <div className="bg-[#f4f4f4] min-h-screen font-sans text-slate-700">
       <HeroSection />
-      <Bar/>
-      <Features/>
+      <Bar />
+      <Features />
       <EnrollmentProcess />
-      <CTA/>
+      <CTA />
     </div>
   );
 };

@@ -1,12 +1,12 @@
-import React from 'react'
-import { features } from '../../assets/asstes';
-import FeatureCard from './FeatureCard.jsx';
-import { sectionHeading } from '../../assets/asstes.js';
+import React from "react";
+import { features } from "../../assets/asstes";
+import FeatureCard from "./FeatureCard.jsx";
+import { sectionHeading } from "../../assets/asstes.js";
 
 const Features = () => {
   return (
     <div>
-        <section className="py-20 px-6 max-w-7xl mx-auto">
+      <section className="py-20 px-6 max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className={sectionHeading}>Banking Capabilities</h2>
           <p className="max-w-2xl mx-auto font-serif italic text-slate-500 mt-4">
@@ -22,7 +22,7 @@ const Features = () => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default Features
+export default Features;

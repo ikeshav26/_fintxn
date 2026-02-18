@@ -16,11 +16,12 @@ import NotFound from "./pages/NotFound";
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
-  const locattion=useLocation();
-  
+  const locattion = useLocation();
+
   return (
     <div className="">
-      {locattion.pathname !== '/login' && locattion.pathname !== '/register' && <Navbar />}
+      {locattion.pathname !== "/login" &&
+        locattion.pathname !== "/register" && <Navbar />}
       <Routes>
         <Route path="/account-details" element={<AccountDetails />} />
         <Route path="/account-statement" element={<AccountStatement />} />
@@ -35,7 +36,8 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {locattion.pathname !== '/login' && locattion.pathname !== '/register' && <Footer />}
+      {locattion.pathname !== "/login" &&
+        locattion.pathname !== "/register" && <Footer />}
       <Toaster position="bottom-right" />
     </div>
   );
