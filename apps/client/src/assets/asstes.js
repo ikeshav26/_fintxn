@@ -3,6 +3,9 @@ import {
   Send,
   FileText,
   Users,
+  Shield, 
+  Clock,
+  Zap
 } from 'lucide-react';
 
 export const features = [
@@ -62,4 +65,11 @@ export  const steps = [
     { num: 1, label: 'Identity Details' },
     { num: 2, label: 'Email Verification' },
     { num: 3, label: 'Final Confirmation' },
+  ];
+
+export const securityFeatures = [
+    { icon: Shield, title: "256-Bit SSL Encryption", desc: "Military-grade data transit protection." },
+    { icon: ShieldCheck, title: "Two-Factor Authentication", desc: "Multi-layered verification for every login." },
+    { icon: Zap, title: "Fraud Monitoring", desc: "Real-time activity analysis and threat detection." },
+    { icon: Clock, title: "Session Auto-Timeout", desc: "Automatic logout after 15 minutes of inactivity." }
   ];

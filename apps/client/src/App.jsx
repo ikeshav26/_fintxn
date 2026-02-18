@@ -36,7 +36,7 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
       {locattion.pathname !== '/login' && locattion.pathname !== '/register' && <Footer />}
-      <Toaster />
+      <Toaster position="bottom-right" />
     </div>
   );
 };
