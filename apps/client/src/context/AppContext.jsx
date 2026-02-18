@@ -3,7 +3,7 @@ import appContext from "./appContext.js";
 import { useNavigate } from "react-router-dom";
 
 const ContextProvider = ({ children }) => {
-  const [user, setuser] = useState(null);
+  const [user, setuser] = useState(localStorage.getItem("fintxn_demo_user") ? JSON.parse(localStorage.getItem("fintxn_demo_user")) : null);
 
   const logoutUser = () => {
     setuser(null);

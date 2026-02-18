@@ -57,3 +57,9 @@ export  const accountDropdownRoutes = [
     { label: "DASHBOARD", path: "/dashboard" },
     { label: "PAYMENTS & TRANSFERS", path: "/transfer" }
   ];
+
+export  const steps = [
+    { num: 1, label: 'Identity Details' },
+    { num: 2, label: 'Email Verification' },
+    { num: 3, label: 'Final Confirmation' },
+  ];

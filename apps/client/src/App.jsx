@@ -1,6 +1,6 @@
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import AccountDetails from "./pages/AccountDetails";
 import AccountStatement from "./pages/AccountStatement";
 import Benificiaries from "./pages/Benificiaries";
@@ -16,9 +16,11 @@ import NotFound from "./pages/NotFound";
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
+  const locattion=useLocation();
+  
   return (
     <div className="">
-      <Navbar />
+      {locattion.pathname !== '/login' && locattion.pathname !== '/register' && <Navbar />}
       <Routes>
         <Route path="/account-details" element={<AccountDetails />} />
         <Route path="/account-statement" element={<AccountStatement />} />
@@ -33,7 +35,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      {locattion.pathname !== '/login' && locattion.pathname !== '/register' && <Footer />}
       <Toaster />
     </div>
   );
