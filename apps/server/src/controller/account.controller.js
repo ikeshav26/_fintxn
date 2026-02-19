@@ -175,3 +175,91 @@ export const verifyMpin = async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
+
+export const userNetBalance=async(req,res)=>{
+  try{
+    const userId=req.user.id;
+
+    const accounts=await Account.find({user:userId});
+    if(accounts.length===0){
+      return res.status(404).json({message:"No accounts found for user"});
+    }
+
+    let netBalance=0;
+    for(const account of accounts){
+      const balance=await account.getbalance();
+      netBalance+=balance;
+    }
+
+    res.status(200).json({message:"User net balance fetched successfully",netBalance});
+  }catch(err){
+    console.error("Error fetching user net balance:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+}
+
+export const secureCheckBalance = async (req, res) => {
+  try {
+    const accountId = req.params.accountId;
+    const { mpin } = req.body;
+
+    if (!accountId) {
+      return res.status(400).json({ message: "Account ID is required" });
+    }
+    if (!mpin) {
+      return res.status(400).json({ message: "MPIN is required" });
+    }
+
+    const isValid = await isMpinValid(accountId, mpin);
+    if (!isValid) {
+      return res.status(401).json({ message: "Invalid MPIN" });
+    }
+
+    const account = await Account.findById(accountId);
+    if (!account) {
+      return res.status(404).json({ message: "Account not found" });
+    }
+
+    const balance = await account.getbalance();
+    res.status(200).json({ balance });
+  } catch (err) {
+    console.error("Error checking secure balance:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
+export const secureNetBalance = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { accountId, mpin } = req.body;
+
+    if (!accountId) {
+      return res.status(400).json({ message: "Account ID is required" });
+    }
+    if (!mpin) {
+      return res.status(400).json({ message: "MPIN is required" });
+    }
+
+    const isValid = await isMpinValid(accountId, mpin);
+    if (!isValid) {
+      return res.status(401).json({ message: "Invalid MPIN" });
+    }
+
+    const accounts = await Account.find({ user: userId });
+    if (accounts.length === 0) {
+      return res.status(404).json({ message: "No accounts found for user" });
+    }
+
+    let netBalance = 0;
+    for (const account of accounts) {
+      const balance = await account.getbalance();
+      netBalance += balance;
+    }
+
+    res.status(200).json({ message: "Net balance fetched successfully", netBalance });
+  } catch (err) {
+    console.error("Error fetching secure net balance:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
